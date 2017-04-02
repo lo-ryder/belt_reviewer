@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Our App</title>
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/skeleton-framework/1.1.1/skeleton.min.css">
+  </head>
+
+  <body>
+    <a href="{% url 'bookapp:newbook'%}">Add Book and Review</a>
+    <a href="{% url 'logregapp:index'%}">Logout</a>
+
+    {% for user in currentUser %}
+    <h1>Welcome, {{user.first_name}}!</h1>
+    {% endfor %}
+    <br><br><br>
+    <h2>Recent Book Reviews:</h3>
+    {% for review in reviews3 %}
+    <hr>
+    <h3><a href="{% url 'bookapp:info' review.book_reviewed.id %}">{{review.book_reviewed.title}}</a></h3>
+    <h3>By: {{review.book_reviewed.author.name}}</h3>
+    <h3>Star Rating: {{review.rating}}</h3>
+    <p><a href="{% url 'reviewapp:users' review.reviewer.id %}">{{review.reviewer.first_name}}</a> Says: {{review.content}}</p>
+    <p>{{review.created_at}}</p>
+    <br><br>
+    {% endfor %}
+
+    <h2>Other Books with Reviews:</h3>
+    <div style="height:320px;width:520px;border:1px solid #ccc;font:8px/10px;overflow:auto;">
+      {% for review in reviewsMore %}
+      <h3><a href="{% url 'bookapp:info' review.book_reviewed.id %}">{{review.book_reviewed.title}}</a></h3>
+      {% endfor %}
+    </div>
+  </body>
+</html>
